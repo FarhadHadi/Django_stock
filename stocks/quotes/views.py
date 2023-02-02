@@ -12,8 +12,8 @@ def home(request):
     if request.method == 'POST':
         ticker = request.POST['ticker']
 
-        proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
-        api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(ticker), proxies=proxies)
+        #proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
+        api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(ticker))#, proxies=proxies)
         
         try:
             api = json.loads(api_request.content)
@@ -34,7 +34,7 @@ def about(request):
 def add_stock(request):
     import requests
     import json
-    proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
+    #proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
 
     if request.method == 'POST':
         form= StockForm(request.POST or None)
@@ -48,7 +48,7 @@ def add_stock(request):
         ticker = Stock.objects.all()
         output=[]
         for ticker_item in ticker:
-            api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(str(ticker_item)), proxies=proxies)
+            api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(str(ticker_item)))#, proxies=proxies)
             
             try:
                 api = json.loads(api_request.content)
