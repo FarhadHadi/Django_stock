@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/af2a9b76-3592-4043-b36d-e73f49b4a186/AppServices/subscriptions/af2a9b76-3592-4043-b36d-e73f49b4a186/resourceGroups/Trial/providers/Microsoft.Web/sites/FarhadStock",
+    "appService.deploySubpath": "."
+}
