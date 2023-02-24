@@ -12,7 +12,7 @@ def home(request):
     if request.method == 'POST':
         ticker = request.POST['ticker']
 
-        #proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
+        
         api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(ticker))#, proxies=proxies)
         
         try:
@@ -48,8 +48,9 @@ def add_stock(request):
         ticker = Stock.objects.all()
         output=[]
         for ticker_item in ticker:
-            api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(str(ticker_item)))#, proxies=proxies)
-            
+            api_request = requests.get("https://api.iex.cloud/v1/data/core/HISTORICAL_PRICES/{}?token=pk_df6617f28d5b4006a15bee56b6a7e034".format(str(ticker_item)))#, proxies=proxies)
+                                    #"https://api.iex.cloud/v1/data/core/quote/{}?token=pk_df6617f28d5b4006a15bee56b6a7e034"
+                                    #"https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_df6617f28d5b4006a15bee56b6a7e034"    --> old api
             try:
                 api = json.loads(api_request.content)
                 output.append(api)
