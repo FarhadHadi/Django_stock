@@ -13,10 +13,11 @@ def home(request):
         ticker = request.POST['ticker']
 
         
-        api_request = requests.get("https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_c96957675c4848fe8f7bdc10fbebae38".format(ticker))#, proxies=proxies)
+        api_request = requests.get("https://api.iex.cloud/v1/data/core/quote/{}?token=pk_64dfa912ae2c4556b5f5186b4b4e3c82".format(ticker))#, proxies=proxies)
         
         try:
-            api = json.loads(api_request.content)
+            api = json.loads(api_request.text)
+            api=api[0]
         except Exception as e:
             api = "Error..."
         return render(request, 'home.html', {"api":api})
@@ -34,7 +35,7 @@ def about(request):
 def add_stock(request):
     import requests
     import json
-    #proxies = {"https": "http://no.client-swg.oneadr.net:8080"}
+
 
     if request.method == 'POST':
         form= StockForm(request.POST or None)
@@ -48,11 +49,13 @@ def add_stock(request):
         ticker = Stock.objects.all()
         output=[]
         for ticker_item in ticker:
-            api_request = requests.get("https://api.iex.cloud/v1/data/core/HISTORICAL_PRICES/{}?token=pk_df6617f28d5b4006a15bee56b6a7e034".format(str(ticker_item)))#, proxies=proxies)
-                                    #"https://api.iex.cloud/v1/data/core/quote/{}?token=pk_df6617f28d5b4006a15bee56b6a7e034"
+            api_request = requests.get("https://api.iex.cloud/v1/data/core/quote/{}?token=pk_64dfa912ae2c4556b5f5186b4b4e3c82".format(str(ticker_item)))#, proxies=proxies)
+                                    #"https://api.iex.cloud/v1/data/core/quote/{}?token=pk_64dfa912ae2c4556b5f5186b4b4e3c82"
+                                    #"https://api.iex.cloud/v1/data/CORE/QUOTE/{}?token=pk_df6617f28d5b4006a15bee56b6a7e034"
                                     #"https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_df6617f28d5b4006a15bee56b6a7e034"    --> old api
             try:
                 api = json.loads(api_request.content)
+                api = api[0]
                 output.append(api)
                 
             except Exception as e:
